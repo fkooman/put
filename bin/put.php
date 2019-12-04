@@ -38,7 +38,7 @@ function assert_same($a, $b)
     $callerInfo = debug_backtrace()[1];
     $calledBy = $callerInfo['function'];
 
-    echo sprintf('"%s" !== "%s" (function: %s)', $a, $b, $calledBy);
+    echo sprintf('"%s" !== "%s" (function: %s)', $a, $b, $calledBy) . PHP_EOL;
     exit(1);
 }
 
