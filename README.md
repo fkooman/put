@@ -27,11 +27,15 @@ folder and you are good to go:
 	
 	$ put
 	.
+	$ echo $?
+	0
 
 In case your test fails:
 
 	$ put
 	"2019-01-02" !== "2019-01-01" (function: testDate)
+	$ echo $?
+	1
 	
 ### Comparison
 
