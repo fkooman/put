@@ -9,7 +9,7 @@ function fail()
     $callerInfo = debug_backtrace()[1];
     $calledBy = $callerInfo['function'];
 
-    echo sprintf('FAIL (function: %s)', $calledBy).PHP_EOL;
+    echo sprintf('ERROR: FAIL (function: %s)', $calledBy).PHP_EOL;
     exit(1);
 }
 
@@ -38,7 +38,7 @@ function assert_same($a, $b)
     $callerInfo = debug_backtrace()[1];
     $calledBy = $callerInfo['function'];
 
-    echo sprintf('"%s" !== "%s" (function: %s)', $a, $b, $calledBy) . PHP_EOL;
+    echo sprintf('ERROR: "%s" !== "%s" (function: %s)', $a, $b, $calledBy) . PHP_EOL;
     exit(1);
 }
 
