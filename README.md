@@ -1,6 +1,6 @@
 # PHP Unit Testing For the Insane
 
-So, after attending a presenation on PHP and mocking I started evaluating
+So, after attending a presentation on PHP and mocking I started evaluating
 whether or not I actually need PHPUnit. It seems the only functions I use are
 `assertSame()`, `fail()` and `ok()` for running my tests. That seems hardly 
 enough justification for having PHPUnit as a (development) dependency.
