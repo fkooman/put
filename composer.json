@@ -2,6 +2,11 @@
     "name": "fkooman/put",
     "description": "PHP Unit Testing For The Insane",
     "type": "project",
+    "autoload": {
+        "psr-4": {
+            "fkooman\\Put\\": "src/"
+        }
+    },
     "require": {
         "php": ">=5.4"
     },

@@ -1,86 +1,45 @@
 #!/usr/bin/php
 <?php
 
-/**
- * @return void
- */
-function fail()
-{
-    // figure out who called us
-    $callerInfo = debug_backtrace()[1];
-    $calledBy = $callerInfo['function'];
+require_once dirname(__DIR__).'/vendor/autoload.php';
+// also autoload the project, make autoloader configurable!
+require_once 'vendor/autoload.php';
 
-    echo sprintf('ERROR: FAIL (function: %s)', $calledBy).PHP_EOL;
-    exit(1);
-}
-
-/**
- * @return void
- */
-function ok()
-{
-    echo '.';
-}
-
-/**
- * @param mixed $a
- * @param mixed $b
- * @return void
- */
-function assert_same($a, $b)
-{
-    if ($a === $b) {
-        echo '.';
-
-        return;
-    }
-
-    // figure out who called us
-    $callerInfo = debug_backtrace()[1];
-    $calledBy = $callerInfo['function'];
-
-    $typeA = gettype($a);
-    $typeB = gettype($b);
-    if ($typeA !== $typeB) {
-        echo sprintf('ERROR: types "%s" !== "%s" (function: %s)', $typeA, $typeB, $calledBy) . PHP_EOL;
-        exit(1);
-    }
-
-    if (is_array($a)) {
-        // be a bit more clever in helping the developer see what is wrong
-        $serializedArrayA = var_export($a, true);
-        $serializedArrayB = var_export($b, true);
-        echo sprintf('ERROR: array is not the same (function: %s)', $calledBy) . PHP_EOL;
-        echo '---- FIRST ----' . PHP_EOL;
-        echo $serializedArrayA . PHP_EOL;
-        echo '---- SECOND ----' . PHP_EOL;
-        echo $serializedArrayB . PHP_EOL;
-        exit(1);
-    }
-
-    echo sprintf('ERROR: "%s" !== "%s" (function: %s)', $a, $b, $calledBy) . PHP_EOL;
-    exit(1);
-}
-
-// find all test*.php files
-$testFileList = @glob(sprintf('tests/test*.php'));
+// find all *Test.php files in tests/
+// XXX make search recursive
+$testFileList = @glob(sprintf('tests/*Test.php'));
 if (false === $testFileList || 0 === count($testFileList)) {
     echo 'ERROR: no testable files found in "tests/"' . PHP_EOL;
     exit(1);
 }
 
+$classesToTest = [];
 foreach ($testFileList as $testFile) {
-    // limitation: one can not redefine the same function in different files,
-    // so EVERY test function MUST have a unique name
     include $testFile;
+    $declaredClasses = get_declared_classes();
+    $className = basename($testFile, '.php');
+    foreach ($declaredClasses as $declaredClass) {
+        // make sure we only find the testable classes!
+        // run get_declared_classes() first BEFORE starting to include files
+        // and diff it
+        if ('Test' === substr($declaredClass, -4)) {
+            $classesToTest[] = $declaredClass;
+        }
+    }
 }
 
-// find the user defined functions and call them!
-$functionList = get_defined_functions();
-$userFunctionList = $functionList['user'];
-foreach ($userFunctionList as $userFunction) {
-    // call all functions where the name starts with "test"
-    if (0 === strpos($userFunction, 'test')) {
-        call_user_func($userFunction);
+foreach ($classesToTest as $classToTest) {
+//    echo $classToTest . PHP_EOL;
+    $c = new $classToTest();
+    $classMethods = get_class_methods($c);
+    if (in_array('setUp', $classMethods)) {
+        $c->setUp();
+    }
+
+    // find all methods with a name that start with test and call them
+    foreach ($classMethods as $classMethod) {
+        if (0 === strpos($classMethod, 'test')) {
+            $c->$classMethod();
+        }
     }
 }
