@@ -10,9 +10,9 @@ class ExceptionTest extends TestCase
     {
         try {
             throw new Exception('foo');
-            self::fail();
+            $this->fail();
         } catch (Exception $e) {
-            self::assertSame('foo', $e->getMessage());
+            $this->assertSame('foo', $e->getMessage());
         }
     }
 }

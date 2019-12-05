@@ -4,13 +4,16 @@ namespace fkooman\Put;
 
 class TestCase
 {
+    private $assertionCount = 0;
+
     /**
      * @param mixed $a
      *
      * @return void
      */
-    protected static function assertTrue($a)
+    protected function assertTrue($a)
     {
+        ++$this->assertionCount;
         if (true === $a) {
             echo '.';
 
@@ -29,8 +32,9 @@ class TestCase
      *
      * @return void
      */
-    protected static function assertFalse($a)
+    protected function assertFalse($a)
     {
+        ++$this->assertionCount;
         if (false === $a) {
             echo '.';
 
@@ -50,8 +54,9 @@ class TestCase
      *
      * @return void
      */
-    protected static function assertInstanceOf($a, $b)
+    protected function assertInstanceOf($a, $b)
     {
+        ++$this->assertionCount;
         // $b must be instance of $a
         if ($b instanceof $a) {
             echo '.';
@@ -71,8 +76,9 @@ class TestCase
      *
      * @return void
      */
-    protected static function assertNull($a)
+    protected function assertNull($a)
     {
+        ++$this->assertionCount;
         if (null === $a) {
             echo '.';
 
@@ -92,8 +98,9 @@ class TestCase
      *
      * @return void
      */
-    protected static function assertSame($a, $b)
+    protected function assertSame($a, $b)
     {
+        ++$this->assertionCount;
         if ($a === $b) {
             echo '.';
 
@@ -130,21 +137,31 @@ class TestCase
     /**
      * @return void
      */
-    protected static function ok()
+    protected function ok()
     {
+        ++$this->assertionCount;
         echo '.';
     }
 
     /**
      * @return void
      */
-    protected static function fail()
+    protected function fail()
     {
+        ++$this->assertionCount;
         // figure out who called us
         $callerInfo = debug_backtrace()[1];
         $calledBy = $callerInfo['function'];
 
         echo sprintf('ERROR: FAIL (function: %s)', $calledBy).PHP_EOL;
         exit(1);
+    }
+
+    /**
+     * @return int
+     */
+    public function getAssertionCount()
+    {
+        return $this->assertionCount;
     }
 }

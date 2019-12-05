@@ -51,6 +51,9 @@ foreach ($testFileList as $testFile) {
     }
 }
 
+$assertionCount = 0;
+$testCount = 0;
+$riskyCount = 0;
 $alreadyTested = [];
 foreach ($classesToTest as $classToTest) {
     if (in_array($classToTest, $alreadyTested)) {
@@ -66,9 +69,22 @@ foreach ($classesToTest as $classToTest) {
             $c->setUp();
         }
         if (0 === strpos($classMethod, 'test')) {
+            $preAssertionCount = $c->getAssertionCount();
+            ++$testCount;
             $c->$classMethod();
+            $postAssertionCount = $c->getAssertionCount();
+            if ($preAssertionCount === $postAssertionCount) {
+                echo 'R';
+                ++$riskyCount;
+            }
         }
     }
+    $assertionCount += $c->getAssertionCount();
 }
 
 echo PHP_EOL;
+echo '#Tests      : '.$testCount.PHP_EOL;
+echo '#Assertions : '.$assertionCount.PHP_EOL;
+if (0 !== $riskyCount) {
+    echo '#Risky Tests: '.$riskyCount.PHP_EOL;
+}

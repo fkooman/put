@@ -13,6 +13,6 @@ class ArrayTest extends TestCase
             'a' => ['b' => 'c'],
         ];
 
-        self::assertSame($firstArray, $secondArray);
+        $this->assertSame($firstArray, $secondArray);
     }
 }

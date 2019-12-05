@@ -24,7 +24,7 @@ to use `TestCase`, just like in PHPUnit, but with a different name space, i.e.
         public function testDate()
         {
             $dateTime = new \DateTime('2019-01-01 08:00:00');
-            self::assertSame('2019-01-01', $dateTime->format('Y-m-d'));
+            $this->assertSame('2019-01-01', $dateTime->format('Y-m-d'));
         }
     }
 
@@ -69,9 +69,9 @@ As an example:
         {
             try {
                 throw new Exception('foo');
-                self::fail();
+                $this->fail();
             } catch (Exception $e) {
-                self::assertSame('foo', $e->getMessage());
+                $this->assertSame('foo', $e->getMessage());
             }
         }
     }
