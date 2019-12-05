@@ -5,7 +5,11 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
 // also autoload the project, make autoloader configurable!
 require_once 'vendor/autoload.php';
 
-
+/**
+ * @param string $startDir
+ *
+ * @return array<string>
+ */
 function findAllTestFiles($startDir)
 {
     if (false === $fileList = @glob(sprintf('%s/*', $startDir))) {
@@ -28,7 +32,7 @@ function findAllTestFiles($startDir)
 $testFileList = findAllTestFiles('tests');
 
 if (0 === count($testFileList)) {
-    echo 'ERROR: no testable files found in "tests/"' . PHP_EOL;
+    echo 'ERROR: no testable files found in "tests/"'.PHP_EOL;
     exit(1);
 }
 

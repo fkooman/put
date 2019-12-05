@@ -7,10 +7,10 @@ class ArrayTest extends TestCase
     public function testArrayCompare()
     {
         $firstArray = [
-            'a' => ['b' => 'c']
+            'a' => ['b' => 'c'],
         ];
         $secondArray = [
-            'a' => ['b' => 'c']
+            'a' => ['b' => 'c'],
         ];
 
         self::assertSame($firstArray, $secondArray);
