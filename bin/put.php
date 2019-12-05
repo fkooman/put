@@ -76,6 +76,8 @@ foreach ($classesToTest as $classToTest) {
             if ($preAssertionCount === $postAssertionCount) {
                 echo 'R';
                 ++$riskyCount;
+            } else {
+                echo '.';
             }
         }
     }

@@ -4,6 +4,7 @@ namespace fkooman\Put;
 
 class TestCase
 {
+    /** @var int */
     private $assertionCount = 0;
 
     /**
@@ -15,8 +16,6 @@ class TestCase
     {
         ++$this->assertionCount;
         if (true === $a) {
-            echo '.';
-
             return;
         }
 
@@ -36,8 +35,6 @@ class TestCase
     {
         ++$this->assertionCount;
         if (false === $a) {
-            echo '.';
-
             return;
         }
 
@@ -59,8 +56,6 @@ class TestCase
         ++$this->assertionCount;
         // $b must be instance of $a
         if ($b instanceof $a) {
-            echo '.';
-
             return;
         }
 
@@ -80,8 +75,6 @@ class TestCase
     {
         ++$this->assertionCount;
         if (null === $a) {
-            echo '.';
-
             return;
         }
 
@@ -102,8 +95,6 @@ class TestCase
     {
         ++$this->assertionCount;
         if ($a === $b) {
-            echo '.';
-
             return;
         }
 
@@ -140,7 +131,6 @@ class TestCase
     protected function ok()
     {
         ++$this->assertionCount;
-        echo '.';
     }
 
     /**

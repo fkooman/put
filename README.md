@@ -83,7 +83,7 @@ If you don't care about the exception message you can use `ok()` instead of the
 
 If you are currently using PHPUnit, you can easily convert:
 
-    $ find tests/ -type f -exec sed -i 's/use PHPUnit\\Framework\\TestCase/use fkooman\\Put\\TestCase/g' {} +
+    $ find tests/ -type f -exec sed -i 's/PHPUnit\\Framework\\TestCase/fkooman\\Put\\TestCase/g' {} +
 
 Make sure you are not using `@expectedException` anymore. Also, write your own
 mocks, don't use any of the built-in mock builders.
