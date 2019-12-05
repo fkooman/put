@@ -7,6 +7,36 @@ class TestCase
     /** @var int */
     private $assertionCount = 0;
 
+    /** @var string|null */
+    private $expectedException = null;
+
+    /**
+     * @return string|null
+     */
+    public function getExpectedException()
+    {
+        return $this->expectedException;
+    }
+
+    /**
+     * @return void
+     */
+    public function deletedExpectedException()
+    {
+        $this->expectedException = null;
+    }
+
+    /**
+     * @param string $a
+     *
+     * @return void
+     */
+    protected function expectException($a)
+    {
+        ++$this->assertionCount;
+        $this->expectedException = $a;
+    }
+
     /**
      * @param mixed $a
      *
@@ -83,6 +113,18 @@ class TestCase
         $calledBy = $callerInfo['function'];
         echo sprintf('ERROR: null !== "%s" (function: %s)', $a, $calledBy).PHP_EOL;
         exit(1);
+    }
+
+    /**
+     * @param mixed $a
+     * @param mixed $b
+     *
+     * @return void
+     */
+    protected function assertEquals($a, $b)
+    {
+        ++$this->assertionCount;
+        // NOP
     }
 
     /**

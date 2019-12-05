@@ -71,7 +71,21 @@ foreach ($classesToTest as $classToTest) {
         if (0 === strpos($classMethod, 'test')) {
             $preAssertionCount = $c->getAssertionCount();
             ++$testCount;
-            $c->$classMethod();
+            $c->deletedExpectedException();
+            try {
+                $c->$classMethod();
+                // did we expect an exception but didn't get one?
+                if (null !== $c->getExpectedException()) {
+                    die('WAAA, no exception thrown!');
+                }
+            } catch (\Exception $e) {
+                // did we expect one?!
+                if (null !== $expectedException = $c->getExpectedException()) {
+                    if (get_class($e) !== $expectedException) {
+                        die('WAA, wrong exception received');
+                    }
+                }
+            }
             $postAssertionCount = $c->getAssertionCount();
             if ($preAssertionCount === $postAssertionCount) {
                 echo 'R';
