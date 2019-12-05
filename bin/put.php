@@ -25,7 +25,7 @@ function findAllTestFiles($startDir)
 }
 
 // find all *Test.php files in tests/ and subdirs
-$testFileList = findAllTestFiles(dirname(__DIR__).'/tests');
+$testFileList = findAllTestFiles('tests');
 
 if (0 === count($testFileList)) {
     echo 'ERROR: no testable files found in "tests/"' . PHP_EOL;
@@ -47,8 +47,12 @@ foreach ($testFileList as $testFile) {
     }
 }
 
+$alreadyTested = [];
 foreach ($classesToTest as $classToTest) {
-//    echo $classToTest . PHP_EOL;
+    if (in_array($classToTest, $alreadyTested)) {
+        continue;
+    }
+    $alreadyTested[] = $classToTest;
     $c = new $classToTest();
     $classMethods = get_class_methods($c);
     // find all methods with a name that start with test and call them
