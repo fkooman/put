@@ -26,6 +26,44 @@ class TestCase
      * @param mixed $a
      * @return void
      */
+    protected static function assertFalse($a)
+    {
+        if (false === $a) {
+            echo '.';
+            return;
+        }
+
+        // figure out who called us
+        $callerInfo = debug_backtrace()[1];
+        $calledBy = $callerInfo['function'];
+        echo sprintf('ERROR: false !== "%s" (function: %s)', $a, $calledBy) . PHP_EOL;
+        exit(1);
+    }
+
+    /**
+     * @param mixed $a
+     * @param mixed $b
+     * @return void
+     */
+    protected static function assertInstanceOf($a, $b)
+    {
+        // $b must be instance of $a
+        if ($b instanceof $a) {
+            echo '.';
+            return;
+        }
+
+        // figure out who called us
+        $callerInfo = debug_backtrace()[1];
+        $calledBy = $callerInfo['function'];
+        echo sprintf('ERROR: "%s" NOT instanceof "%s" (function: %s)', $b, $a, $calledBy) . PHP_EOL;
+        exit(1);
+    }
+
+    /**
+     * @param mixed $a
+     * @return void
+     */
     protected static function assertNull($a)
     {
         if (null === $a) {

@@ -32,14 +32,16 @@ foreach ($classesToTest as $classToTest) {
 //    echo $classToTest . PHP_EOL;
     $c = new $classToTest();
     $classMethods = get_class_methods($c);
-    if (in_array('setUp', $classMethods)) {
-        $c->setUp();
-    }
-
     // find all methods with a name that start with test and call them
     foreach ($classMethods as $classMethod) {
+        // if setup is there, always run it before the test method!
+        if (in_array('setUp', $classMethods)) {
+            $c->setUp();
+        }
         if (0 === strpos($classMethod, 'test')) {
             $c->$classMethod();
         }
     }
 }
+
+echo PHP_EOL;
