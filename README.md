@@ -8,19 +8,25 @@ enough justification for having PHPUnit as a (development) dependency.
 That is when I decided to see how difficult it would be to create my own unit 
 tester. Turns out, not *that* difficult for basic functionality.
 
+We do NOT aim at full PHPUnit compatiblity, only the stuff that is really 
+useful will be implemented. Write your own mock classes!
+
 ## Writing Tests
 
 In the `tests/` folder of your project you can write your tests. The idea is 
-not to use `TestCase` but simply write functions that test your code, for 
-example:
+to use `TestCase`, just like in PHPUnit, but with a different name space, i.e. 
+`fkooman\Put\TestCase`. For example:
 
-	<?php
+    <?php
 
-	function testDate()
-	{
-		$dateTime = new DateTime('2019-01-01 08:00:00');
-		assert_same('2019-01-01', $dateTime->format('Y-m-d'));
-	}
+    class SimpleTest extends \fkooman\Put\TestCase
+    {
+        public function testDate()
+        {
+            $dateTime = new \DateTime('2019-01-01 08:00:00');
+            self::assertSame('2019-01-01', $dateTime->format('Y-m-d'));
+        }
+    }
 
 Now you can simply run `put` in your project folder which contains the `tests/` 
 folder and you are good to go:
@@ -39,9 +45,13 @@ In case your test fails:
 	
 ### Comparison
 
-For now only `test_same()` is implemented as we don't need anything else. It 
-prints a `.` if the test succeeds or prints an error and terminates the test
-runner with an exit code 1 if it doesn't.
+We have the following comparison functions implemented as of now:
+
+* `assertSame()`
+* `assertTrue()`
+* `assertFalse()`
+* `assertNull()`
+* `assertInstanceOf()`
 
 ### Exceptions
 
@@ -49,17 +59,22 @@ In order to test exceptions, we have the `ok()` and `fail()` functions.
 
 As an example:
 
-	<?php
+    <?php
 
-	function testException()
-	{
-		try {
-			throw new Exception('foo');
-			fail();
-		} catch (Exception $e) {
-			assert_same('foo', $e->getMessage());
-		}
-	}
+    use Exception;
+
+    class ExceptionTest extends \fkooman\Put\TestCase
+    {
+        public function testException()
+        {
+            try {
+                throw new Exception('foo');
+                self::fail();
+            } catch (Exception $e) {
+                self::assertSame('foo', $e->getMessage());
+            }
+        }
+    }
 
 If you don't care about the exception message you can use `ok()` instead of the
-`assert_same()`.
+`assertSame()`.
