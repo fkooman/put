@@ -5,10 +5,29 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
 // also autoload the project, make autoloader configurable!
 require_once 'vendor/autoload.php';
 
-// find all *Test.php files in tests/
-// XXX make search recursive
-$testFileList = @glob(sprintf('tests/*Test.php'));
-if (false === $testFileList || 0 === count($testFileList)) {
+
+function findAllTestFiles($startDir)
+{
+    if (false === $fileList = @glob(sprintf('%s/*', $startDir))) {
+        return [];
+    }
+    $testList = [];
+    foreach ($fileList as $fileEntry) {
+        if (is_dir($fileEntry)) {
+            $testList = array_merge($testList, findAllTestFiles(realpath($fileEntry)));
+        }
+        if ('Test.php' === substr($fileEntry, -8)) {
+            $testList[] = $fileEntry;
+        }
+    }
+
+    return $testList;
+}
+
+// find all *Test.php files in tests/ and subdirs
+$testFileList = findAllTestFiles(dirname(__DIR__).'/tests');
+
+if (0 === count($testFileList)) {
     echo 'ERROR: no testable files found in "tests/"' . PHP_EOL;
     exit(1);
 }
