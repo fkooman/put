@@ -1,9 +1,18 @@
 #!/usr/bin/php
 <?php
 
-require_once dirname(__DIR__).'/vendor/autoload.php';
-// also autoload the project, make autoloader configurable!
-require_once 'vendor/autoload.php';
+require_once dirname(__DIR__).'/src/TestCase.php';
+
+$projectAutoloader = realpath('vendor/autoload.php');
+for ($i = 0; $i < count($argv); ++$i) {
+    if ('--bootstrap' === $argv[$i] || '-bootstrap' === $argv[$i]) {
+        if ($i + 1 < count($argv)) {
+            $projectAutoloader = realpath($argv[++$i]);
+        }
+    }
+}
+
+require_once $projectAutoloader;
 
 /**
  * @param string $startDir
