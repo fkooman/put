@@ -89,15 +89,18 @@ foreach ($classesToTest as $classToTest) {
                 }
             } catch (\Exception $e) {
                 // did we expect one?!
-                if (null !== $expectedException = $c->getExpectedException()) {
-                    if (get_class($e) !== $expectedException) {
-                        die('WAA, wrong exception received');
-                    }
+                if (null === $expectedException = $c->getExpectedException()) {
+                    // we got one, but did not expect one!
+                    die('WAAA, we got exception but did not expect one!');
+                }
+                if (get_class($e) !== $expectedException) {
+                    die('WAA, wrong exception received');
                 }
             }
             $postAssertionCount = $c->getAssertionCount();
             if ($preAssertionCount === $postAssertionCount) {
                 echo 'R';
+                echo ':('.$classMethod.')';
                 ++$riskyCount;
             } else {
                 echo '.';
