@@ -29,7 +29,7 @@ function findAllTestFiles($startDir)
         if (is_dir($fileEntry)) {
             $testList = array_merge($testList, findAllTestFiles(realpath($fileEntry)));
         }
-        if ('Test.php' === substr($fileEntry, -8)) {
+        if ('test.php' === strtolower(substr($fileEntry, -8))) {
             $testList[] = $fileEntry;
         }
     }
