@@ -151,7 +151,7 @@ class TestCase
     protected function assertNotEmpty($variable)
     {
         ++$this->assertionCount;
-        if (!empty($actual)) {
+        if (empty($variable)) {
             throw new TestException('assertNotEmpty');
         }
     }

@@ -11,6 +11,9 @@ tester. Turns out, not *that* difficult for the very basic functionality.
 We do NOT aim at full PHPUnit compatibility, only the stuff that is really 
 useful will be implemented. Write your own mock classes!
 
+This project does **NOT** support PHPUnit annotations, including data 
+providers.
+
 ## Using
 
 In your project's `composer.json`:
