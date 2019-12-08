@@ -266,7 +266,6 @@ class TestCase
                 $postAssertionCount = $this->assertionCount;
                 if ($preAssertionCount === $postAssertionCount) {
                     echo 'R';
-//                    echo ':('.$classMethod.')';
                     ++$this->riskyCount;
                 } else {
                     echo '.';

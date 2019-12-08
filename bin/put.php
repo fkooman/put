@@ -5,22 +5,36 @@ require_once dirname(__DIR__).'/src/fkooman/Put/TestCase.php';
 require_once dirname(__DIR__).'/src/PHPUnit/Framework/TestCase.php';
 
 $projectAutoloader = realpath('vendor/autoload.php');
-for ($i = 0; $i < count($argv); ++$i) {
+$testSuffix = 'Test.php';
+$testFolder = 'tests';
+
+for ($i = 1; $i < count($argv); ++$i) {
     if ('--bootstrap' === $argv[$i] || '-bootstrap' === $argv[$i]) {
         if ($i + 1 < count($argv)) {
             $projectAutoloader = realpath($argv[++$i]);
         }
+        continue;
     }
+    if ('--suffix' === $argv[$i] || '-suffix' === $argv[$i]) {
+        if ($i + 1 < count($argv)) {
+            $testSuffix = $argv[++$i];
+        }
+        continue;
+    }
+    // if we have an argument that is not any of these, it must be the tests
+    // folder...
+    $testFolder = $argv[$i];
 }
 
 require_once $projectAutoloader;
 
 /**
  * @param string $startDir
+ * @param string $testSuffix
  *
  * @return array<string>
  */
-function findAllTestFiles($startDir)
+function findAllTestFiles($startDir, $testSuffix)
 {
     if (false === $fileList = @glob(sprintf('%s/*', $startDir))) {
         return [];
@@ -28,9 +42,9 @@ function findAllTestFiles($startDir)
     $testList = [];
     foreach ($fileList as $fileEntry) {
         if (is_dir($fileEntry)) {
-            $testList = array_merge($testList, findAllTestFiles(realpath($fileEntry)));
+            $testList = array_merge($testList, findAllTestFiles(realpath($fileEntry), $testSuffix));
         }
-        if ('test.php' === strtolower(substr($fileEntry, -8))) {
+        if ($testSuffix === substr($fileEntry, -strlen($testSuffix))) {
             $testList[] = $fileEntry;
         }
     }
@@ -39,10 +53,10 @@ function findAllTestFiles($startDir)
 }
 
 // find all *Test.php files in tests/ and subdirs
-$testFileList = findAllTestFiles('tests');
+$testFileList = findAllTestFiles($testFolder, $testSuffix);
 
 if (0 === count($testFileList)) {
-    echo 'ERROR: no testable files found in "tests/"'.PHP_EOL;
+    echo sprintf('ERROR: no testable files found in "%s/"', $testFolder).PHP_EOL;
     exit(1);
 }
 
