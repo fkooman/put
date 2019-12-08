@@ -22,4 +22,10 @@ class ExceptionTest extends TestCase
         $this->expectException('RangeException');
         throw new RangeException('foo');
     }
+
+//    public function testUnexpectedException()
+//    {
+//        $this->assertSame('a', 'a');
+//        throw new RangeException('foo');
+//    }
 }

@@ -2,6 +2,7 @@
 <?php
 
 require_once dirname(__DIR__).'/src/TestCase.php';
+require_once dirname(__DIR__).'/src/TestException.php';
 
 $projectAutoloader = realpath('vendor/autoload.php');
 $testSuffix = 'Test.php';
@@ -77,6 +78,8 @@ foreach ($testFileList as $testFile) {
 $assertionCount = 0;
 $testCount = 0;
 $riskyCount = 0;
+$errorCount = 0;
+$errorList = [];
 $alreadyTested = [];
 foreach ($classesToTest as $classToTest) {
     if (in_array($classToTest, $alreadyTested)) {
@@ -88,6 +91,8 @@ foreach ($classesToTest as $classToTest) {
     $assertionCount += $c->getAssertionCount();
     $testCount += $c->getTestCount();
     $riskyCount += $c->getRiskyCount();
+    $errorCount += $c->getErrorCount();
+    $errorList = array_merge($errorList, $c->getErrorList());
 }
 
 echo PHP_EOL;
@@ -95,4 +100,11 @@ echo '#Tests      : '.$testCount.PHP_EOL;
 echo '#Assertions : '.$assertionCount.PHP_EOL;
 if (0 !== $riskyCount) {
     echo '#Risky Tests: '.$riskyCount.PHP_EOL;
+}
+if (0 !== $errorCount) {
+    echo '#Errors     : '.$errorCount.PHP_EOL;
+    foreach ($errorList as $error) {
+        echo '**** ERROR ****'.PHP_EOL.$error->getMessage().PHP_EOL.$error->getTraceAsString().PHP_EOL.PHP_EOL;
+    }
+    exit(1);
 }

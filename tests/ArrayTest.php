@@ -15,4 +15,16 @@ class ArrayTest extends TestCase
 
         $this->assertSame($firstArray, $secondArray);
     }
+
+//    public function testArrayCompareNotSame()
+//    {
+//        $firstArray = [
+//            'a' => ['b' => 'c'],
+//        ];
+//        $secondArray = [
+//            'a' => ['b' => 'd'],
+//        ];
+
+//        $this->assertSame($firstArray, $secondArray);
+//    }
 }
