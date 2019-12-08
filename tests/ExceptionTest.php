@@ -1,8 +1,9 @@
 <?php
 
-namespace fkooman\Put;
+namespace PHPUnit\Framework;
 
 use Exception;
+use RangeException;
 
 class ExceptionTest extends TestCase
 {
@@ -14,5 +15,11 @@ class ExceptionTest extends TestCase
         } catch (Exception $e) {
             $this->assertSame('foo', $e->getMessage());
         }
+    }
+
+    public function testExpectedException()
+    {
+        $this->expectException('RangeException');
+        throw new RangeException('foo');
     }
 }

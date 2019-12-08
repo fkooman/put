@@ -1,8 +1,7 @@
 #!/usr/bin/php
 <?php
 
-require_once dirname(__DIR__).'/src/fkooman/Put/TestCase.php';
-require_once dirname(__DIR__).'/src/PHPUnit/Framework/TestCase.php';
+require_once dirname(__DIR__).'/src/TestCase.php';
 
 $projectAutoloader = realpath('vendor/autoload.php');
 $testSuffix = 'Test.php';
@@ -21,7 +20,7 @@ for ($i = 1; $i < count($argv); ++$i) {
         }
         continue;
     }
-    // if we have an argument that is not any of these, it must be the tests
+    // if we have an argument that is not any of these, it must be the "tests"
     // folder...
     $testFolder = $argv[$i];
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace fkooman\Put;
+namespace PHPUnit\Framework;
 
 class TestCase
 {
@@ -239,10 +239,11 @@ class TestCase
         $classMethods = get_class_methods($this);
         // find all methods with a name that start with test and call them
         foreach ($classMethods as $classMethod) {
-            // if setup is there, always run it before the test method!
-            if (in_array('setUp', $classMethods)) {
+            // if "setUp" method is there, always run it before the test method
+            if (method_exists($this, 'setUp')) {
                 $this->setUp();
             }
+
             if (0 === strpos($classMethod, 'test')) {
                 $preAssertionCount = $this->assertionCount;
                 ++$this->testCount;
