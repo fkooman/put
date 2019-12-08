@@ -11,7 +11,7 @@ tester. Turns out, not *that* difficult for the very basic functionality.
 We do NOT aim at full PHPUnit compatibility, only the stuff that is really 
 useful will be implemented. Write your own mock classes!
 
-## Dependency
+## Using
 
 In your project's `composer.json`:
 
@@ -63,11 +63,12 @@ We have the following functions are implemented as of now:
 * `assertInstanceOf()`
 * `ok()`
 * `fail()`
+* `expectException()`
 
 ### Exceptions
 
-There are two ways to test exceptions. The first is by using `expectException` 
-at the start of the your test method, e.g.:
+There are two ways to test exceptions. The first is by using 
+`expectException()` at the start of the your test method, e.g.:
 
     $this->expectException('RangeException');
 
