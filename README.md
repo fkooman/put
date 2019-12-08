@@ -16,6 +16,8 @@ providers.
 
 ## Using
 
+This project requires PHP >= 5.4. It has no other dependencies.
+
 In your project's `composer.json`:
 
     "repositories": [
