@@ -3,6 +3,7 @@
 namespace PHPUnit\Framework;
 
 use Exception;
+use fkooman\Put\TestException;
 
 class TestCase
 {
@@ -18,7 +19,7 @@ class TestCase
     /** @var int */
     private $errorCount = 0;
 
-    /** @var array<\Exception> */
+    /** @var array<TestException> */
     private $errorList = [];
 
     /** @var string|null */
@@ -204,7 +205,7 @@ class TestCase
     /**
      * @return int
      */
-    public function getAssertionCount()
+    public function noOfAssertions()
     {
         return $this->assertionCount;
     }
@@ -212,7 +213,7 @@ class TestCase
     /**
      * @return int
      */
-    public function getTestCount()
+    public function noOfTests()
     {
         return $this->testCount;
     }
@@ -220,7 +221,7 @@ class TestCase
     /**
      * @return int
      */
-    public function getRiskyCount()
+    public function noOfRiskyTests()
     {
         return $this->riskyCount;
     }
@@ -228,15 +229,15 @@ class TestCase
     /**
      * @return int
      */
-    public function getErrorCount()
+    public function noOfErrors()
     {
         return $this->errorCount;
     }
 
     /**
-     * @return array<\Exception>
+     * @return array<TestException>
      */
-    public function getErrorList()
+    public function errorList()
     {
         return $this->errorList;
     }

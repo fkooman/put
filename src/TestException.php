@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnit\Framework;
+namespace fkooman\Put;
 
 use Exception;
 
