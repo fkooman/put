@@ -60,6 +60,7 @@ We have the following functions are implemented as of now:
 * `assertGreaterThanOrEqual()`
 * `assertInternalType()`
 * `assertEquals()`
+* `assertNotEmpty()`
 * `assertTrue()`
 * `assertFalse()`
 * `assertNull()`

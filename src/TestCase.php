@@ -144,6 +144,19 @@ class TestCase
     }
 
     /**
+     * @param mixed $variable
+     *
+     * @return void
+     */
+    protected function assertNotEmpty($variable)
+    {
+        ++$this->assertionCount;
+        if (!empty($actual)) {
+            throw new TestException('assertNotEmpty');
+        }
+    }
+
+    /**
      * @param mixed $expected
      * @param mixed $actual
      *
