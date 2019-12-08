@@ -25,136 +25,135 @@ class TestCase
     private $expectedException = null;
 
     /**
-     * @param string $a
+     * @param string $expected
      *
      * @return void
      */
-    protected function expectException($a)
+    protected function expectException($expected)
     {
         ++$this->assertionCount;
-        $this->expectedException = $a;
+        $this->expectedException = $expected;
     }
 
     /**
-     * @param mixed $a
+     * @param bool $condition
      *
      * @return void
      */
-    protected function assertTrue($a)
+    protected function assertTrue($condition)
     {
         ++$this->assertionCount;
-        if (true !== $a) {
+        if (true !== $condition) {
             throw new TestException('assertTrue');
         }
     }
 
     /**
-     * @param mixed $a
+     * @param bool $condition
      *
      * @return void
      */
-    protected function assertFalse($a)
+    protected function assertFalse($condition)
     {
         ++$this->assertionCount;
-        if (false !== $a) {
+        if (false !== $condition) {
             throw new TestException('assertFalse');
         }
     }
 
     /**
-     * @param mixed $a
-     * @param mixed $b
+     * @param mixed $expected
+     * @param mixed $actual
      *
      * @return void
      */
-    protected function assertInstanceOf($a, $b)
+    protected function assertInstanceOf($expected, $actual)
     {
         ++$this->assertionCount;
-        // $b must be instance of $a
-        if (!($b instanceof $a)) {
+        if (!($actual instanceof $expected)) {
             throw new TestException('assertInstanceOf');
         }
     }
 
     /**
-     * @param mixed $a
+     * @param mixed $variable
      *
      * @return void
      */
-    protected function assertNull($a)
+    protected function assertNull($variable)
     {
         ++$this->assertionCount;
-        if (null !== $a) {
+        if (null !== $variable) {
             throw new TestException('assertNull');
         }
     }
 
     /**
-     * @param mixed $a
-     * @param mixed $b
+     * @param mixed $expected
+     * @param mixed $actual
      *
      * @return void
      */
-    protected function assertEquals($a, $b)
+    protected function assertEquals($expected, $actual)
     {
         ++$this->assertionCount;
-        if ($a != $b) {
+        if ($expected != $actual) {
             throw new TestException('assertEquals');
         }
     }
 
     /**
-     * @param mixed $a
-     * @param mixed $b
+     * @param mixed $expected
+     * @param mixed $actual
      *
      * @return void
      */
-    protected function assertSame($a, $b)
+    protected function assertSame($expected, $actual)
     {
         ++$this->assertionCount;
-        if ($a !== $b) {
+        if ($expected !== $actual) {
             throw new TestException('assertSame');
         }
     }
 
     /**
-     * @param mixed $a
-     * @param mixed $b
+     * @param mixed $expected
+     * @param mixed $actual
      *
      * @return void
      */
-    protected function assertNotSame($a, $b)
+    protected function assertNotSame($expected, $actual)
     {
         ++$this->assertionCount;
-        if ($a === $b) {
+        if ($expected === $actual) {
             throw new TestException('assertNotSame');
         }
     }
 
     /**
-     * @param mixed $a
-     * @param mixed $b
+     * @param mixed $expected
+     * @param mixed $actual
      *
      * @return void
      */
-    protected function assertGreaterThanOrEqual($a, $b)
+    protected function assertGreaterThanOrEqual($expected, $actual)
     {
         ++$this->assertionCount;
-        if ($a < $b) {
+        if ($expected < $actual) {
             throw new TestException('assertGreaterThanOrEqual');
         }
     }
 
     /**
-     * @param string $a
-     * @param mixed  $b
+     * @param string $expected
+     * @param mixed  $actual
      *
      * @return void
      */
-    protected function assertInternalType($a, $b)
+    protected function assertInternalType($expected, $actual)
     {
         ++$this->assertionCount;
-        if ($a !== gettype($b)) {
+        if ($expected !== gettype($actual)) {
             throw new TestException('assertInternalType');
         }
     }
