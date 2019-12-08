@@ -1,7 +1,8 @@
 #!/usr/bin/php
 <?php
 
-require_once dirname(__DIR__).'/src/TestCase.php';
+require_once dirname(__DIR__).'/src/fkooman/Put/TestCase.php';
+require_once dirname(__DIR__).'/src/PHPUnit/Framework/TestCase.php';
 
 $projectAutoloader = realpath('vendor/autoload.php');
 for ($i = 0; $i < count($argv); ++$i) {
@@ -70,44 +71,10 @@ foreach ($classesToTest as $classToTest) {
     }
     $alreadyTested[] = $classToTest;
     $c = new $classToTest();
-    $classMethods = get_class_methods($c);
-    // find all methods with a name that start with test and call them
-    foreach ($classMethods as $classMethod) {
-        // if setup is there, always run it before the test method!
-        if (in_array('setUp', $classMethods)) {
-            $c->setUp();
-        }
-        if (0 === strpos($classMethod, 'test')) {
-            $preAssertionCount = $c->getAssertionCount();
-            ++$testCount;
-            $c->deletedExpectedException();
-            try {
-                $c->$classMethod();
-                // did we expect an exception but didn't get one?
-                if (null !== $c->getExpectedException()) {
-                    die('WAAA, no exception thrown!');
-                }
-            } catch (\Exception $e) {
-                // did we expect one?!
-                if (null === $expectedException = $c->getExpectedException()) {
-                    // we got one, but did not expect one!
-                    die('WAAA, we got exception but did not expect one!');
-                }
-                if (get_class($e) !== $expectedException) {
-                    die('WAA, wrong exception received');
-                }
-            }
-            $postAssertionCount = $c->getAssertionCount();
-            if ($preAssertionCount === $postAssertionCount) {
-                echo 'R';
-                echo ':('.$classMethod.')';
-                ++$riskyCount;
-            } else {
-                echo '.';
-            }
-        }
-    }
+    $c->run();
     $assertionCount += $c->getAssertionCount();
+    $testCount += $c->getTestCount();
+    $riskyCount += $c->getRiskyCount();
 }
 
 echo PHP_EOL;

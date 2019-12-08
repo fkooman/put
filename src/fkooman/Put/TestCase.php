@@ -5,26 +5,16 @@ namespace fkooman\Put;
 class TestCase
 {
     /** @var int */
+    private $testCount = 0;
+
+    /** @var int */
+    private $riskyCount = 0;
+
+    /** @var int */
     private $assertionCount = 0;
 
     /** @var string|null */
     private $expectedException = null;
-
-    /**
-     * @return string|null
-     */
-    public function getExpectedException()
-    {
-        return $this->expectedException;
-    }
-
-    /**
-     * @return void
-     */
-    public function deletedExpectedException()
-    {
-        $this->expectedException = null;
-    }
 
     /**
      * @param string $a
@@ -223,5 +213,65 @@ class TestCase
     public function getAssertionCount()
     {
         return $this->assertionCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTestCount()
+    {
+        return $this->testCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRiskyCount()
+    {
+        return $this->riskyCount;
+    }
+
+    /**
+     * @return void
+     */
+    public function run()
+    {
+        $classMethods = get_class_methods($this);
+        // find all methods with a name that start with test and call them
+        foreach ($classMethods as $classMethod) {
+            // if setup is there, always run it before the test method!
+            if (in_array('setUp', $classMethods)) {
+                $this->setUp();
+            }
+            if (0 === strpos($classMethod, 'test')) {
+                $preAssertionCount = $this->assertionCount;
+                ++$this->testCount;
+                $this->expectedException = null;
+                try {
+                    $this->$classMethod();
+                    // did we expect an exception but didn't get one?
+                    if (null !== $this->expectedException) {
+                        die('WAAA, no exception thrown!');
+                    }
+                } catch (\Exception $e) {
+                    // did we expect one?!
+                    if (null === $this->expectedException) {
+                        // we got one, but did not expect one!
+                        die('WAAA, we got exception but did not expect one!');
+                    }
+                    if (get_class($e) !== $this->expectedException) {
+                        die('WAA, wrong exception received');
+                    }
+                }
+                $postAssertionCount = $this->assertionCount;
+                if ($preAssertionCount === $postAssertionCount) {
+                    echo 'R';
+//                    echo ':('.$classMethod.')';
+                    ++$this->riskyCount;
+                } else {
+                    echo '.';
+                }
+            }
+        }
     }
 }
