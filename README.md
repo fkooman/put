@@ -6,64 +6,81 @@ whether or not I actually need PHPUnit. It seems the only functions I use are
 enough justification for having PHPUnit as a (development) dependency.
 
 That is when I decided to see how difficult it would be to create my own unit 
-tester. Turns out, not *that* difficult for basic functionality.
+tester. Turns out, not *that* difficult for the very basic functionality.
 
-We do NOT aim at full PHPUnit compatiblity, only the stuff that is really 
+We do NOT aim at full PHPUnit compatibility, only the stuff that is really 
 useful will be implemented. Write your own mock classes!
+
+## Dependency
+
+In your project's `composer.json`:
+
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://git.tuxed.net/fkooman/put"
+        }
+    ],
+
+    ...
+
+    "require-dev": {
+        "fkooman/put": "dev-master"
+    },
+
+Do not forget to run `composer update`.
 
 ## Writing Tests
 
-In the `tests/` folder of your project you can write your tests. The idea is 
-to use `TestCase`, just like in PHPUnit, but with a different name space, i.e. 
-`fkooman\Put\TestCase`. For example:
+Writing tests is the same as for PHPUnit. Put them in the `tests/` directory of 
+your project. A simple example:
 
     <?php
 
-    class SimpleTest extends \fkooman\Put\TestCase
+    namespace my\app;
+
+    use DateTime;
+    use PHPUnit\Framework\TestCase;
+
+    class SimpleTest extends TestCase
     {
         public function testDate()
         {
-            $dateTime = new \DateTime('2019-01-01 08:00:00');
+            $dateTime = new DateTime('2019-01-01 08:00:00');
             $this->assertSame('2019-01-01', $dateTime->format('Y-m-d'));
         }
     }
 
-Now you can simply run `put` in your project folder which contains the `tests/` 
-folder and you are good to go:
-	
-	$ put
-	.
-	$ echo $?
-	0
+### Assertions
 
-In case your test fails:
-
-	$ put
-	"2019-01-02" !== "2019-01-01" (function: testDate)
-	$ echo $?
-	1
-	
-### Comparison
-
-We have the following comparison functions implemented as of now:
+We have the following functions are implemented as of now:
 
 * `assertSame()`
+* `assertEquals()`
 * `assertTrue()`
 * `assertFalse()`
 * `assertNull()`
 * `assertInstanceOf()`
+* `ok()`
+* `fail()`
 
 ### Exceptions
 
-In order to test exceptions, we have the `ok()` and `fail()` functions.
+There are two ways to test exceptions. The first is by using `expectException` 
+at the start of the your test method, e.g.:
 
-As an example:
+    $this->expectException('RangeException');
+
+The second way is to catch the exceptions yourself. As an example:
 
     <?php
 
-    use Exception;
+    namespace my\app;
 
-    class ExceptionTest extends \fkooman\Put\TestCase
+    use Exception;
+    use PHPUnit\Framework\TestCase;
+
+    class ExceptionTest extends TestCase
     {
         public function testException()
         {
@@ -79,11 +96,43 @@ As an example:
 If you don't care about the exception message you can use `ok()` instead of the
 `assertSame()`.
 
-# Conversion
+## Running Tests
 
-If you are currently using PHPUnit, you can easily convert:
+Assuming you added `put` to your `composer.json`, you can simply run it:
 
-    $ find tests/ -type f -exec sed -i 's/PHPUnit\\Framework\\TestCase/fkooman\\Put\\TestCase/g' {} +
+    $ vendor/bin/put
+    .............
+    #Tests      : 13
+    #Assertions : 14
+    $ echo $?
+    0
 
-Make sure you are not using `@expectedException` anymore. Also, write your own
-mocks, don't use any of the built-in mock builders.
+There are 3 parameters to `put`. You can specify the project's autoloader with 
+the `--bootstrap` flag, and the test file suffix with the `--suffix` flag. You 
+can also specify the directory that contains the tests. As an example (using 
+the defaults):
+
+    $ vendor/bin/put --bootstrap vendor/autoload.php --suffix Test.php tests
+
+This uses the default composer `vendor/autoload.php` as the autoloader and 
+searches (recursively) in the `tests/` directory for PHP files where their 
+name ends in `Test.php`.
+
+### Test Failure
+
+    $ vendor/bin/put
+    ...E.
+    #Tests      : 5
+    #Assertions : 5
+    #Errors     : 1
+    **** ERROR ****
+    assertSame
+    #0 /home/fkooman/Projects/put/tests/SimpleTest.php(12): PHPUnit\Framework\TestCase->assertSame('2019-01-02', '2019-01-01')
+    #1 /home/fkooman/Projects/put/src/TestCase.php(196): PHPUnit\Framework\SimpleTest->testDate()
+    #2 /home/fkooman/Projects/put/bin/put(90): PHPUnit\Framework\TestCase->run()
+    #3 {main}
+    $ echo $?
+    1
+
+From the trace your can determine where it went wrong. The output is not as 
+sophisticated as the PHPUnit output, but hey!
