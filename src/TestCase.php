@@ -89,6 +89,19 @@ class TestCase
     }
 
     /**
+     * @param mixed $variable
+     *
+     * @return void
+     */
+    protected function assertNotNull($variable)
+    {
+        ++$this->assertionCount;
+        if (null === $variable) {
+            throw new TestException('assertNotNull');
+        }
+    }
+
+    /**
      * @param mixed $expected
      * @param mixed $actual
      *

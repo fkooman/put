@@ -63,6 +63,7 @@ We have the following functions are implemented as of now:
 * `assertTrue()`
 * `assertFalse()`
 * `assertNull()`
+* `assertNotNull()`
 * `assertInstanceOf()`
 * `ok()`
 * `fail()`
