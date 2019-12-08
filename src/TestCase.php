@@ -37,6 +37,13 @@ class TestCase
     }
 
     /**
+     * @return void
+     */
+    protected function setUp()
+    {
+    }
+
+    /**
      * @param bool $condition
      *
      * @return void
@@ -166,7 +173,7 @@ class TestCase
     protected function assertGreaterThanOrEqual($expected, $actual)
     {
         ++$this->assertionCount;
-        if ($expected < $actual) {
+        if ($actual < $expected) {
             throw new TestException('assertGreaterThanOrEqual');
         }
     }

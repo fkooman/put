@@ -29,7 +29,6 @@ class Put
                 include_once $testFile;
             }
             $declaredClasses = get_declared_classes();
-            $className = basename($testFile, '.php');
             foreach ($declaredClasses as $declaredClass) {
                 // make sure we only find the testable classes!
                 // run get_declared_classes() first BEFORE starting to include files
@@ -47,7 +46,7 @@ class Put
         $errorList = [];
         $alreadyTested = [];
         foreach ($classesToTest as $classToTest) {
-            if (in_array($classToTest, $alreadyTested)) {
+            if (in_array($classToTest, $alreadyTested, true)) {
                 continue;
             }
             $alreadyTested[] = $classToTest;
