@@ -118,6 +118,48 @@ class TestCase
     }
 
     /**
+     * @param mixed $a
+     * @param mixed $b
+     *
+     * @return void
+     */
+    protected function assertNotSame($a, $b)
+    {
+        ++$this->assertionCount;
+        if ($a === $b) {
+            throw new TestException('assertNotSame');
+        }
+    }
+
+    /**
+     * @param mixed $a
+     * @param mixed $b
+     *
+     * @return void
+     */
+    protected function assertGreaterThanOrEqual($a, $b)
+    {
+        ++$this->assertionCount;
+        if ($a < $b) {
+            throw new TestException('assertGreaterThanOrEqual');
+        }
+    }
+
+    /**
+     * @param string $a
+     * @param mixed  $b
+     *
+     * @return void
+     */
+    protected function assertInternalType($a, $b)
+    {
+        ++$this->assertionCount;
+        if ($a !== gettype($b)) {
+            throw new TestException('assertInternalType');
+        }
+    }
+
+    /**
      * @return void
      */
     protected function ok()

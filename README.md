@@ -56,6 +56,9 @@ your project. A simple example:
 We have the following functions are implemented as of now:
 
 * `assertSame()`
+* `assertNotSame()`
+* `assertGreaterThanOrEqual()`
+* `assertInternalType()`
 * `assertEquals()`
 * `assertTrue()`
 * `assertFalse()`
