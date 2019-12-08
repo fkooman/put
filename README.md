@@ -1,4 +1,4 @@
-# PHP Unit Testing For the Insane
+# PHP Unit Testing for Minimalists
 
 So, after attending a presentation on PHP and mocking I started evaluating
 whether or not I actually need PHPUnit. It seems the only functions I use are
