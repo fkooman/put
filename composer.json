@@ -2,14 +2,12 @@
     "name": "fkooman/put",
     "description": "PHP Unit Testing For The Insane",
     "type": "project",
-    "autoload": {
-        "psr-4": {
-            "PHPUnit\\Framework\\": "src/"
-        }
-    },
     "require": {
         "php": ">=5.4"
     },
+    "bin": [
+        "bin/put"
+    ],
     "license": "MIT",
     "authors": [
         {
