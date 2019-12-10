@@ -4,6 +4,9 @@ namespace PHPUnit\Framework;
 
 class ArrayTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testArrayCompare()
     {
         $firstArray = [

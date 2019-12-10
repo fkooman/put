@@ -7,16 +7,21 @@ use RangeException;
 
 class ExceptionTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testException()
     {
         try {
             throw new Exception('foo');
-            $this->fail();
         } catch (Exception $e) {
             $this->assertSame('foo', $e->getMessage());
         }
     }
 
+    /**
+     * @return void
+     */
     public function testExpectedException()
     {
         $this->expectException('RangeException');

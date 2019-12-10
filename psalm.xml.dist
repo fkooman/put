@@ -4,6 +4,7 @@
     <file name="bin/put"/>
     <directory name="bin"/>
     <directory name="src"/>
+    <directory name="tests"/>
     <ignoreFiles>
       <directory name="vendor"/>
     </ignoreFiles>
