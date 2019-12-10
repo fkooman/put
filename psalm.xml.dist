@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<psalm totallyTyped="true" resolveFromConfigFile="true">
+  <projectFiles>
+    <file name="bin/put"/>
+    <directory name="bin"/>
+    <directory name="src"/>
+    <ignoreFiles>
+      <directory name="vendor"/>
+    </ignoreFiles>
+  </projectFiles>
+</psalm>

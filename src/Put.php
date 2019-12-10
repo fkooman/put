@@ -50,6 +50,9 @@ class Put
                 continue;
             }
             $alreadyTested[] = $classToTest;
+            if (false === class_exists($classToTest, false)) {
+                continue;
+            }
             $c = new $classToTest();
             if (!($c instanceof TestCase)) {
                 continue;

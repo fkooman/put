@@ -266,12 +266,13 @@ class TestCase
                 if (0 === strpos($classMethod, 'test')) {
                     $preAssertionCount = $this->assertionCount;
                     ++$this->testCount;
-                    $this->expectedException = null;
+                    $expectedException = null;
                     try {
                         $this->$classMethod();
                         // did we expect an exception but didn't get one?
-                        if (null !== $this->expectedException) {
-                            throw new TestException(sprintf('no exception "%s" thrown in "%s"', $this->expectedException, $classMethod));
+                        $expectedException = $this->expectedException;
+                        if (null !== $expectedException) {
+                            throw new TestException(sprintf('no exception "%s" thrown in "%s"', $expectedException, $classMethod));
                         }
                     } catch (Exception $e) {
                         // is this needed? FIXME
@@ -279,13 +280,15 @@ class TestCase
                             throw $e;
                         }
                         // did we expect one?!
-                        if (null === $this->expectedException) {
+                        $expectedException = $this->expectedException;
+                        if (null === $expectedException) {
                             throw new TestException(sprintf('unexpected exception "%s" thrown in "%s"', get_class($e), $classMethod));
                         }
-                        if (get_class($e) !== $this->expectedException) {
-                            throw new TestException(sprintf('exception "%s" thrown, expected type "%s" in "%s"', $this->expectedException, get_class($e), $classMethod));
+                        if (get_class($e) !== $expectedException) {
+                            throw new TestException(sprintf('exception "%s" thrown, expected type "%s" in "%s"', $expectedException, get_class($e), $classMethod));
                         }
                     }
+                    $this->expectedException = null;
                     $postAssertionCount = $this->assertionCount;
                     if ($preAssertionCount === $postAssertionCount) {
                         echo 'R';
