@@ -1,6 +1,6 @@
 {
     "name": "fkooman/put",
-    "description": "PHP Unit Testing For The Insane",
+    "description": "PHP Unit Testing for Minimalists",
     "type": "project",
     "require": {
         "php": ">=5.4"
