@@ -1,18 +1,23 @@
 # PHP Unit Testing for Minimalists
 
 So, after attending a presentation on PHP and mocking I started evaluating
-whether or not I actually need PHPUnit. It seems the only functions I use are
-`assertSame()`, `fail()` and `ok()` for running my tests. That seems hardly 
-enough justification for having PHPUnit as a (development) dependency.
+whether or not I actually need PHPUnit. It seems the only assertion I use all
+the time is `assertSame()`. That seems hardly enough justification for having 
+PHPUnit as a (development) dependency. Are we simple yet? :-)
 
-That is when I decided to see how difficult it would be to create my own unit 
-tester. Turns out, not *that* difficult for the very basic functionality.
+That is when I decided to see how difficult it would be to create my own 
+PHPUnit compatible unit tester. Turns out, not *that* difficult for the very 
+basic functionality.
 
-We do NOT aim at full PHPUnit compatibility, only the stuff that is really 
-useful will be implemented. Write your own mock classes!
+The goal is obviously *NOT* to have full feature compatibility with PHPUnit. 
+Only stuff that is useful, and easy to implement, and that has no other obvious
+way to achieve is implemented. 
 
-This project does **NOT** support PHPUnit annotations, including data 
-providers.
+So, no object mocking, no data providers, no PHPUnit annotations and just a 
+bunch of assertions and exception testing. That's all.
+
+After testing some software in the wild, it turns out many projects can be 
+tested with put!
 
 ## Using
 
@@ -37,8 +42,8 @@ Do not forget to run `composer update`.
 
 ## Writing Tests
 
-Writing tests is the same as for PHPUnit. Put them in the `tests/` directory of 
-your project. A simple example:
+Writing tests is exactly the same as for PHPUnit. Put them in the `tests/` 
+directory of your project. A simple example:
 
     <?php
 
@@ -56,9 +61,12 @@ your project. A simple example:
         }
     }
 
+This makes it easy to run both PHPUnit and put to make sure put is not screwing 
+up :)
+
 ### Assertions
 
-We have the following functions are implemented as of now:
+As of now, we have the following assertions implemented:
 
 * `assertSame()`
 * `assertNotSame()`
@@ -105,7 +113,8 @@ The second way is to catch the exceptions yourself. As an example:
     }
 
 If you don't care about the exception message you can use `ok()` instead of the
-`assertSame()`.
+`assertSame()` to avoid introducing a "risky" test that did not verify any 
+assertions.
 
 ## Running Tests
 
