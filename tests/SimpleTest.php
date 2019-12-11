@@ -1,8 +1,9 @@
 <?php
 
-namespace PHPUnit\Framework;
+namespace fkooman\Put;
 
 use DateTime;
+use PHPUnit\Framework\TestCase;
 
 class SimpleTest extends TestCase
 {

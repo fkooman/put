@@ -1,6 +1,8 @@
 <?php
 
-namespace PHPUnit\Framework;
+namespace fkooman\Put;
+
+use PHPUnit\Framework\TestCase;
 
 class ArrayTest extends TestCase
 {

@@ -1,8 +1,9 @@
 <?php
 
-namespace PHPUnit\Framework;
+namespace fkooman\Put;
 
 use Exception;
+use PHPUnit\Framework\TestCase;
 use RangeException;
 
 class ExceptionTest extends TestCase
