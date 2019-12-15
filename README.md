@@ -141,16 +141,18 @@ name ends in `Test.php`.
     #Assertions : 5
     #Errors     : 1
     **** ERROR ****
+    [fkooman\Put\Exception\AssertSameException]
     --- EXPECTED ---
-    2019-01-02
+    '2019-01-02'
     --- ACTUAL ---
-    2019-01-01
+    '2019-01-01'
     --- END ---
     #0 /home/fkooman/Projects/put/tests/SimpleTest.php(16): PHPUnit\Framework\TestCase->assertSame('2019-01-02', '2019-01-01')
-    #1 /home/fkooman/Projects/put/src/TestCase.php(282): fkooman\Put\SimpleTest->testDate()
+    #1 /home/fkooman/Projects/put/src/TestCase.php(274): fkooman\Put\SimpleTest->testDate()
     #2 /home/fkooman/Projects/put/src/Put.php(61): PHPUnit\Framework\TestCase->run()
     #3 /home/fkooman/Projects/put/bin/put(22): fkooman\Put\Put->run(Array)
     #4 {main}
+
     $ echo $?
     1
 
