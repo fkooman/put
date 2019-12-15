@@ -79,7 +79,6 @@ As of now, we have the following assertions implemented:
 * `assertNull()`
 * `assertNotNull()`
 * `assertInstanceOf()`
-* `ok()`
 * `fail()`
 * `expectException()`
 
@@ -111,10 +110,6 @@ The second way is to catch the exceptions yourself. As an example:
             }
         }
     }
-
-If you don't care about the exception message you can use `ok()` instead of the
-`assertSame()` to avoid introducing a "risky" test that did not verify any 
-assertions.
 
 ## Running Tests
 

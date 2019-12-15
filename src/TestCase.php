@@ -206,14 +206,6 @@ class TestCase
     /**
      * @return void
      */
-    protected function ok()
-    {
-        ++$this->assertionCount;
-    }
-
-    /**
-     * @return void
-     */
     protected function fail()
     {
         ++$this->assertionCount;
