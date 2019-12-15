@@ -146,11 +146,16 @@ name ends in `Test.php`.
     #Assertions : 5
     #Errors     : 1
     **** ERROR ****
-    assertSame
-    #0 /home/fkooman/Projects/put/tests/SimpleTest.php(12): PHPUnit\Framework\TestCase->assertSame('2019-01-02', '2019-01-01')
-    #1 /home/fkooman/Projects/put/src/TestCase.php(196): PHPUnit\Framework\SimpleTest->testDate()
-    #2 /home/fkooman/Projects/put/bin/put(90): PHPUnit\Framework\TestCase->run()
-    #3 {main}
+    --- EXPECTED ---
+    2019-01-02
+    --- ACTUAL ---
+    2019-01-01
+    --- END ---
+    #0 /home/fkooman/Projects/put/tests/SimpleTest.php(16): PHPUnit\Framework\TestCase->assertSame('2019-01-02', '2019-01-01')
+    #1 /home/fkooman/Projects/put/src/TestCase.php(282): fkooman\Put\SimpleTest->testDate()
+    #2 /home/fkooman/Projects/put/src/Put.php(61): PHPUnit\Framework\TestCase->run()
+    #3 /home/fkooman/Projects/put/bin/put(22): fkooman\Put\Put->run(Array)
+    #4 {main}
     $ echo $?
     1
 
