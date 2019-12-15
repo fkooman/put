@@ -75,7 +75,7 @@ class Put
         if (0 !== $errorCount) {
             echo '#Errors     : '.$errorCount.PHP_EOL;
             foreach ($errorList as $error) {
-                echo '**** ERROR ****'.PHP_EOL.$error->getMessage().PHP_EOL.$error->getTraceAsString().PHP_EOL.PHP_EOL;
+                echo '**** ERROR ****'.PHP_EOL.'['.get_class($error).']'.PHP_EOL.$error->getMessage().PHP_EOL.$error->getTraceAsString().PHP_EOL.PHP_EOL;
             }
             exit(1);
         }

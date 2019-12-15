@@ -9,7 +9,7 @@ class AssertNullException extends TestException
      */
     public function __construct($condition)
     {
-        $message = '--- EXPECTED ---'.PHP_EOL.print_r(null, true).PHP_EOL.'--- ACTUAL ---'.PHP_EOL.print_r($condition, true).PHP_EOL.'--- END ---';
+        $message = '--- EXPECTED ---'.PHP_EOL.var_export(null, true).PHP_EOL.'--- ACTUAL ---'.PHP_EOL.var_export($condition, true).PHP_EOL.'--- END ---';
         parent::__construct($message);
     }
 }

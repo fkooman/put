@@ -9,7 +9,7 @@ class AssertFalseException extends TestException
      */
     public function __construct($condition)
     {
-        $message = '--- EXPECTED ---'.PHP_EOL.print_r(false, true).PHP_EOL.'--- ACTUAL ---'.PHP_EOL.print_r($condition, true).PHP_EOL.'--- END ---';
+        $message = '--- EXPECTED ---'.PHP_EOL.var_export(false, true).PHP_EOL.'--- ACTUAL ---'.PHP_EOL.var_export($condition, true).PHP_EOL.'--- END ---';
         parent::__construct($message);
     }
 }
