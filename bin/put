@@ -3,7 +3,19 @@
 
 require_once dirname(__DIR__).'/src/Put.php';
 require_once dirname(__DIR__).'/src/TestCase.php';
-require_once dirname(__DIR__).'/src/TestException.php';
+
+require_once dirname(__DIR__).'/src/Exception/TestException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertEqualsException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertGreaterThanOrEqualException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertInternalTypeException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertNotNullException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertNullException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertTrueException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertFalseException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertInstanceOfException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertNotEmptyException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertNotSameException.php';
+require_once dirname(__DIR__).'/src/Exception/AssertSameException.php';
 
 try {
     $p = new \fkooman\Put\Put();

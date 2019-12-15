@@ -1,6 +1,6 @@
 <?php
 
-namespace fkooman\Put;
+namespace fkooman\Put\Exception;
 
 use Exception;
 

@@ -3,7 +3,18 @@
 namespace PHPUnit\Framework;
 
 use Exception;
-use fkooman\Put\TestException;
+use fkooman\Put\Exception\AssertEqualsException;
+use fkooman\Put\Exception\AssertFalseException;
+use fkooman\Put\Exception\AssertGreaterThanOrEqualException;
+use fkooman\Put\Exception\AssertInstanceOfException;
+use fkooman\Put\Exception\AssertInternalTypeException;
+use fkooman\Put\Exception\AssertNotEmptyException;
+use fkooman\Put\Exception\AssertNotNullException;
+use fkooman\Put\Exception\AssertNotSameException;
+use fkooman\Put\Exception\AssertNullException;
+use fkooman\Put\Exception\AssertSameException;
+use fkooman\Put\Exception\AssertTrueException;
+use fkooman\Put\Exception\TestException;
 
 class TestCase
 {
@@ -44,7 +55,7 @@ class TestCase
     }
 
     /**
-     * @param bool $condition
+     * @param mixed $condition
      *
      * @return void
      */
@@ -52,12 +63,12 @@ class TestCase
     {
         ++$this->assertionCount;
         if (true !== $condition) {
-            throw new TestException('assertTrue');
+            throw new AssertTrueException($condition);
         }
     }
 
     /**
-     * @param bool $condition
+     * @param mixed $condition
      *
      * @return void
      */
@@ -65,7 +76,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if (false !== $condition) {
-            throw new TestException('assertFalse');
+            throw new AssertFalseException($condition);
         }
     }
 
@@ -79,7 +90,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if (!($actual instanceof $expected)) {
-            throw new TestException('assertInstanceOf');
+            throw new AssertInstanceOfException($expected, $actual);
         }
     }
 
@@ -92,7 +103,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if (null !== $variable) {
-            throw new TestException('assertNull');
+            throw new AssertNullException($variable);
         }
     }
 
@@ -105,7 +116,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if (null === $variable) {
-            throw new TestException('assertNotNull');
+            throw new AssertNotNullException($variable);
         }
     }
 
@@ -119,7 +130,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if ($expected != $actual) {
-            throw new TestException('assertEquals');
+            throw new AssertEqualsException($expected, $actual);
         }
     }
 
@@ -133,7 +144,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if ($expected !== $actual) {
-            throw new TestException('assertSame');
+            throw new AssertSameException($expected, $actual);
         }
     }
 
@@ -147,7 +158,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if ($expected === $actual) {
-            throw new TestException('assertNotSame');
+            throw new AssertNotSameException($expected, $actual);
         }
     }
 
@@ -160,7 +171,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if (empty($variable)) {
-            throw new TestException('assertNotEmpty');
+            throw new AssertNotEmptyException($variable);
         }
     }
 
@@ -174,7 +185,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if ($actual < $expected) {
-            throw new TestException('assertGreaterThanOrEqual');
+            throw new AssertGreaterThanOrEqualException($expected, $actual);
         }
     }
 
@@ -188,7 +199,7 @@ class TestCase
     {
         ++$this->assertionCount;
         if ($expected !== gettype($actual)) {
-            throw new TestException('assertInternalType');
+            throw new AssertInternalTypeException($expected, $actual);
         }
     }
 
