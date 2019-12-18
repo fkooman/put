@@ -6,6 +6,11 @@ use RuntimeException;
 
 class Coverage
 {
+    /**
+     * @param string $outputFile
+     *
+     * @return void
+     */
     public static function writeReport($outputFile, array $coverageData)
     {
         // get the source code from the files analyzed by the code coverage

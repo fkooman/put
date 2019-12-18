@@ -3,6 +3,7 @@
 namespace fkooman\Put;
 
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 class Put
 {
@@ -39,7 +40,13 @@ class Put
             }
         }
 
-        \pcov\start();
+        $coverageExtensionLoaded = extension_loaded('pcov');
+        if (null !== $projectConfig['coverageOutputFile']) {
+            if (!$coverageExtensionLoaded) {
+                throw new RuntimeException('"ext-pcov" not available, unable to perform code coverage');
+            }
+            \pcov\start();
+        }
 
         $assertionCount = 0;
         $testCount = 0;
@@ -68,8 +75,12 @@ class Put
             $errorList = array_merge($errorList, $c->errorList());
         }
 
-        \pcov\stop();
-        Coverage::writeReport('cov_output.html', \pcov\collect());
+        if (null !== $projectConfig['coverageOutputFile']) {
+            if ($coverageExtensionLoaded) {
+                \pcov\stop();
+                Coverage::writeReport($projectConfig['coverageOutputFile'], \pcov\collect());
+            }
+        }
 
         echo PHP_EOL;
         echo '#Tests      : '.$testCount.PHP_EOL;
@@ -89,10 +100,11 @@ class Put
     /**
      * @param array<string> $argv
      *
-     * @return array{projectAutoloader:string,testsSuffix:string,testsFolder:string}
+     * @return array{coverageOutputFile:string|null,projectAutoloader:string,testsSuffix:string,testsFolder:string}
      */
     private static function parseCommandLine(array $argv)
     {
+        $coverageOutputFile = null;
         $testsFolder = 'tests';
         $testsSuffix = 'Test.php';
         $projectAutoloader = 'vendor/autoload.php';
@@ -110,6 +122,12 @@ class Put
                 }
                 continue;
             }
+            if ('--coverage' === $argv[$i] || '-coverage' === $argv[$i]) {
+                if ($i + 1 < count($argv)) {
+                    $coverageOutputFile = $argv[++$i];
+                }
+                continue;
+            }
             // if we have an argument that is not any of these, it must be the "tests"
             // folder...
             $testsFolder = $argv[$i];
@@ -119,6 +137,7 @@ class Put
             'testsFolder' => $testsFolder,
             'testsSuffix' => $testsSuffix,
             'projectAutoloader' => $projectAutoloader,
+            'coverageOutputFile' => $coverageOutputFile,
         ];
     }
 
