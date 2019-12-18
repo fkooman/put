@@ -3,7 +3,7 @@
 
 require_once dirname(__DIR__).'/src/Put.php';
 require_once dirname(__DIR__).'/src/TestCase.php';
-
+require_once dirname(__DIR__).'/src/Coverage.php';
 require_once dirname(__DIR__).'/src/Exception/TestException.php';
 require_once dirname(__DIR__).'/src/Exception/AssertEqualsException.php';
 require_once dirname(__DIR__).'/src/Exception/AssertGreaterThanOrEqualException.php';

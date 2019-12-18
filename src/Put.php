@@ -39,6 +39,8 @@ class Put
             }
         }
 
+        \pcov\start();
+
         $assertionCount = 0;
         $testCount = 0;
         $riskyCount = 0;
@@ -65,6 +67,9 @@ class Put
             $errorCount += $c->noOfErrors();
             $errorList = array_merge($errorList, $c->errorList());
         }
+
+        \pcov\stop();
+        Coverage::writeReport('cov_output.html', \pcov\collect());
 
         echo PHP_EOL;
         echo '#Tests      : '.$testCount.PHP_EOL;
