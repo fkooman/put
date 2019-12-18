@@ -15,7 +15,8 @@ class Coverage
     {
         // get the source code from the files analyzed by the code coverage
         $templateData = [];
-        foreach (array_keys($coverageData) as $srcFile) {
+        $sourceFileList = array_keys($coverageData);
+        foreach ($sourceFileList as $srcFile) {
             if (false === $filePointer = @fopen($srcFile, 'r')) {
                 throw new RuntimeException(sprintf('unable to open "%s"', $srcFile));
             }

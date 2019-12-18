@@ -29,8 +29,16 @@
     </style>
 </head>
 <body>
+<h1>Test Code Coverage</h1>
+    <p>Files covered by this test.</p>
+    <ul>
+<?php foreach ($sourceFileList as $srcFile): ?>
+        <li><a href="#<?=$srcFile; ?>"><?=$srcFile; ?></a></li>
+<?php endforeach; ?>
+    </ul>
+
 <?php foreach ($templateData as $srcFile => $srcInfo): ?>
-    <h1><?=$srcFile; ?></h1>
+    <h2 id="<?=$srcFile; ?>"><?=$srcFile; ?></h2>
     <table>
 <?php foreach ($srcInfo['srcCode'] as $srcLineNo => $srcLineText): ?>
         <tr>
