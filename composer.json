@@ -20,5 +20,8 @@
             "name": "Fran\u00e7ois Kooman",
             "email": "fkooman@tuxed.net"
         }
-    ]
+    ],
+    "suggest": {
+        "ext-pcov": "Code Coverage"
+    }
 }
