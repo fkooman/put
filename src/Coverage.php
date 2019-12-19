@@ -34,6 +34,15 @@ class Coverage
             ];
         }
 
+        // sort the $templateData array by coverageDataPercent
+        uasort($templateData, function ($a, $b) {
+            if ($a['coveragePercent'] == $b['coveragePercent']) {
+                return 0;
+            }
+
+            return ($a['coveragePercent'] < $b['coveragePercent']) ? -1 : 1;
+        });
+
         ob_start();
         include __DIR__.'/coverage_template.php';
         $htmlPage = ob_get_contents();
