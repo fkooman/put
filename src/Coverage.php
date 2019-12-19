@@ -8,10 +8,11 @@ class Coverage
 {
     /**
      * @param string $outputFile
+     * @param string $currentWorkingDir
      *
      * @return void
      */
-    public static function writeReport($outputFile, array $coverageData)
+    public static function writeReport($outputFile, $currentWorkingDir, array $coverageData)
     {
         // get the source code from the files analyzed by the code coverage
         $templateData = [];
@@ -22,12 +23,14 @@ class Coverage
             }
             $srcCode = [];
             while (false !== $srcLine = fgets($filePointer)) {
-                $srcCode[] = str_replace([' ', "\t"], ['&nbsp;', '&nbsp;&nbsp;&nbsp;&nbsp;'], htmlentities($srcLine));
+                $srcCode[] = htmlentities(rtrim($srcLine));
             }
 
-            $templateData[$srcFile] = [
+            $srcName = substr($srcFile, strlen($currentWorkingDir) + 1);
+            $templateData[$srcName] = [
                 'srcCode' => $srcCode,
                 'coverageData' => $coverageData[$srcFile],
+                'coveragePercent' => self::calculatePercentage($coverageData[$srcFile]),
             ];
         }
 
@@ -38,5 +41,23 @@ class Coverage
         if (false === @file_put_contents($outputFile, $htmlPage)) {
             throw new RuntimeException(sprintf('unable to write to "%s"', $outputFile));
         }
+    }
+
+    /**
+     * @return int
+     */
+    private static function calculatePercentage(array $coverageData)
+    {
+        $coveredAmount = 0;
+        $uncoveredAmount = 0;
+        foreach ($coverageData as $rowCovered) {
+            if (1 === $rowCovered) {
+                ++$coveredAmount;
+            } else {
+                ++$uncoveredAmount;
+            }
+        }
+
+        return floor($coveredAmount / ($coveredAmount + $uncoveredAmount) * 100);
     }
 }

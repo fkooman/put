@@ -10,6 +10,10 @@
             font-family: sans-serif;
         }
 
+        pre {
+            margin: 0;
+        }
+
         table {
             width: 100%;
             background-color: #eee;
@@ -30,12 +34,13 @@
 </head>
 <body>
 <h1>Test Code Coverage</h1>
-    <p>Files covered by this test.</p>
-    <ul>
-<?php foreach ($sourceFileList as $srcFile): ?>
-        <li><a href="#<?=$srcFile; ?>"><?=$srcFile; ?></a></li>
+<h2>Summary</h2>
+    <table>
+        <tr><th>% Covered</th><th>File</th></tr>
+<?php foreach ($templateData as $srcFile => $srcInfo): ?>
+        <tr><td><?=$srcInfo['coveragePercent']; ?>%</td><td><a href="#<?=$srcFile; ?>"><?=$srcFile; ?></a></td></tr>
 <?php endforeach; ?>
-    </ul>
+    </table>
 
 <?php foreach ($templateData as $srcFile => $srcInfo): ?>
     <h2 id="<?=$srcFile; ?>"><?=$srcFile; ?></h2>
@@ -46,16 +51,16 @@
 <?php if (array_key_exists($srcLineNo + 1, $srcInfo['coverageData'])): ?>
 <?php if (1 === $srcInfo['coverageData'][$srcLineNo + 1]): ?>
             <td class="covered">
-                <code><?=$srcLineText; ?></code>
+                <pre><?=$srcLineText; ?></pre>
             </td>
 <?php else: ?>
             <td class="uncovered">
-                <code><?=$srcLineText; ?></code>
+                <pre><?=$srcLineText; ?></pre>
             </td>
 <?php endif; ?>
 <?php else: ?>
             <td>
-                <code><?=$srcLineText; ?></code>
+                <pre><?=$srcLineText; ?></pre>
             </td>
 <?php endif; ?>
         </tr>

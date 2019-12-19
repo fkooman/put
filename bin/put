@@ -19,7 +19,7 @@ require_once dirname(__DIR__).'/src/Exception/AssertSameException.php';
 
 try {
     $p = new \fkooman\Put\Put();
-    $p->run($argv);
+    $p->run($argv, getcwd());
 } catch (Exception $e) {
     echo sprintf('ERROR: %s', $e->getMessage()) . PHP_EOL;
     exit(1);

@@ -9,10 +9,11 @@ class Put
 {
     /**
      * @param array<string> $argv
+     * @param string        $currentWorkingDir
      *
      * @return void
      */
-    public function run(array $argv)
+    public function run(array $argv, $currentWorkingDir)
     {
         $projectConfig = self::parseCommandLine($argv);
         if (file_exists($projectConfig['projectAutoloader'])) {
@@ -78,7 +79,7 @@ class Put
         if (null !== $projectConfig['coverageOutputFile']) {
             if ($coverageExtensionLoaded) {
                 \pcov\stop();
-                Coverage::writeReport($projectConfig['coverageOutputFile'], \pcov\collect());
+                Coverage::writeReport($projectConfig['coverageOutputFile'], $currentWorkingDir, \pcov\collect());
             }
         }
 
