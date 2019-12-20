@@ -285,7 +285,7 @@ class TestCase
                         // did we expect one?!
                         $expectedException = $this->expectedException;
                         if (null === $expectedException) {
-                            throw new TestException(sprintf('unexpected exception "%s" thrown in "%s"', get_class($e), $classMethod));
+                            throw new TestException(sprintf('unexpected exception "%s" thrown in "%s": %s', get_class($e), $classMethod, $e->getMessage()));
                         }
                         if (get_class($e) !== $expectedException) {
                             throw new TestException(sprintf('exception "%s" thrown, expected type "%s" in "%s"', $expectedException, get_class($e), $classMethod));

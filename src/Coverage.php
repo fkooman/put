@@ -34,7 +34,7 @@ class Coverage
             ];
         }
 
-        // sort the $templateData array by coverageDataPercent
+        // sort the $templateData array by coveragePercent
         uasort($templateData, function ($a, $b) {
             if ($a['coveragePercent'] == $b['coveragePercent']) {
                 return 0;
