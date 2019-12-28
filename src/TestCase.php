@@ -36,6 +36,9 @@ class TestCase
     /** @var string|null */
     private $expectedException = null;
 
+    /** @var string|null */
+    private $expectedExceptionMessage = null;
+
     /**
      * @param string $expected
      *
@@ -45,6 +48,16 @@ class TestCase
     {
         ++$this->assertionCount;
         $this->expectedException = $expected;
+    }
+
+    /**
+     * @param string $expectedExceptionMessage
+     *
+     * @return void
+     */
+    protected function expectExceptionMessage($expectedExceptionMessage)
+    {
+        $this->expectedExceptionMessage = $expectedExceptionMessage;
     }
 
     /**
@@ -270,6 +283,7 @@ class TestCase
                     $preAssertionCount = $this->assertionCount;
                     ++$this->testCount;
                     $expectedException = null;
+                    $expectedExceptionMessage = null;
                     try {
                         $this->$classMethod();
                         // did we expect an exception but didn't get one?
@@ -284,14 +298,21 @@ class TestCase
                         }
                         // did we expect one?!
                         $expectedException = $this->expectedException;
+                        $expectedExceptionMessage = $this->expectedExceptionMessage;
                         if (null === $expectedException) {
                             throw new TestException(sprintf('unexpected exception "%s" thrown in "%s": %s', get_class($e), $classMethod, $e->getMessage()));
                         }
                         if (get_class($e) !== $expectedException) {
                             throw new TestException(sprintf('exception "%s" thrown, expected type "%s" in "%s"', $expectedException, get_class($e), $classMethod));
                         }
+                        if (null !== $expectedExceptionMessage) {
+                            if ($expectedExceptionMessage !== $e->getMessage()) {
+                                throw new TestException(sprintf('exception message is "%s", expected "%s"', $e->getMessage(), $expectedException));
+                            }
+                        }
                     }
                     $this->expectedException = null;
+                    $this->expectedExceptionMessage = null;
                     $postAssertionCount = $this->assertionCount;
                     if ($preAssertionCount === $postAssertionCount) {
                         echo 'R';

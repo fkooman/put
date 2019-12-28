@@ -80,7 +80,11 @@ As of now, we have the following assertions implemented:
 * `assertNotNull()`
 * `assertInstanceOf()`
 * `fail()`
+
+For testing exceptions we implemented:
+
 * `expectException()`
+* `expectExceptionMessage()`
 
 ### Exceptions
 
