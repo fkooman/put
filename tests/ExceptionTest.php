@@ -23,9 +23,21 @@ class ExceptionTest extends TestCase
     /**
      * @return void
      */
-    public function testExpectedException()
+    public function testExpectedExceptionString()
     {
         $this->expectException('RangeException');
+        $this->expectExceptionMessage('foo');
+        throw new RangeException('foo');
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpectedExceptionClass()
+    {
+        $this->expectException(RangeException::class);
+        $this->expectExceptionMessage('foo');
+
         throw new RangeException('foo');
     }
 
