@@ -307,7 +307,7 @@ class TestCase
                         }
                         if (null !== $expectedExceptionMessage) {
                             if ($expectedExceptionMessage !== $e->getMessage()) {
-                                throw new TestException(sprintf('exception message is "%s", expected "%s"', $e->getMessage(), $expectedException));
+                                throw new TestException(sprintf('exception message is "%s", expected "%s"', $e->getMessage(), $expectedExceptionMessage));
                             }
                         }
                     }
