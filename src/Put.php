@@ -15,7 +15,21 @@ class Put
      */
     public function run(array $argv, $currentWorkingDir)
     {
-        $projectConfig = self::parseCommandLine($argv);
+        if (null === $projectConfig = self::parseCommandLine($argv)) {
+            // show help
+            $helpText = 'USAGE'.PHP_EOL;
+            $helpText .= '    '.$argv[0].' [OPTION]... TEST_DIRECTORY'.PHP_EOL;
+            $helpText .= 'OPTION'.PHP_EOL;
+            $helpText .= '    --help                            Show this message'.PHP_EOL;
+            $helpText .= '    --bootstrap [vendor/autoload.php] Specify path to PHP script containing the autoloader'.PHP_EOL;
+            $helpText .= '    --suffix [Test.php]               Specify the test suffix for files to tests in'.PHP_EOL;
+            $helpText .= '    --coverage [report.html]          Enable test code coverage'.PHP_EOL;
+            $helpText .= 'EXAMPLE'.PHP_EOL;
+            $helpText .= '    '.$argv[0].' tests/'.PHP_EOL;
+            echo $helpText;
+            exit(0);
+        }
+
         if (file_exists($projectConfig['projectAutoloader'])) {
             require_once $projectConfig['projectAutoloader'];
         }
@@ -101,7 +115,7 @@ class Put
     /**
      * @param array<string> $argv
      *
-     * @return array{coverageOutputFile:string|null,projectAutoloader:string,testsSuffix:string,testsFolder:string}
+     * @return array{coverageOutputFile:string|null,projectAutoloader:string,testsSuffix:string,testsFolder:string}|null
      */
     private static function parseCommandLine(array $argv)
     {
@@ -111,6 +125,9 @@ class Put
         $projectAutoloader = 'vendor/autoload.php';
 
         for ($i = 1; $i < count($argv); ++$i) {
+            if ('--help' === $argv[$i] || '-help' === $argv[$i]) {
+                return null;
+            }
             if ('--bootstrap' === $argv[$i] || '-bootstrap' === $argv[$i]) {
                 if ($i + 1 < count($argv)) {
                     $projectAutoloader = $argv[++$i];
@@ -124,6 +141,7 @@ class Put
                 continue;
             }
             if ('--coverage' === $argv[$i] || '-coverage' === $argv[$i]) {
+                $coverageOutputFile = 'report.html';
                 if ($i + 1 < count($argv)) {
                     $coverageOutputFile = $argv[++$i];
                 }
