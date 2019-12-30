@@ -93,27 +93,9 @@ There are two ways to test exceptions. The first is by using
 
     $this->expectException('RangeException');
 
-The second way is to catch the exceptions yourself. As an example:
+Or when using PHP >= 5.5:
 
-    <?php
-
-    namespace my\app;
-
-    use Exception;
-    use PHPUnit\Framework\TestCase;
-
-    class ExceptionTest extends TestCase
-    {
-        public function testException()
-        {
-            try {
-                throw new Exception('foo');
-                $this->fail();
-            } catch (Exception $e) {
-                $this->assertSame('foo', $e->getMessage());
-            }
-        }
-    }
+    $this->expectException(RangeException::class);
 
 ## Running Tests
 
