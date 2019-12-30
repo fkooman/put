@@ -113,9 +113,9 @@ You can view the `report.html` in your web browser.
 ### Test Failure
 
     $ vendor/bin/put
-    ...E.
-    #Tests      : 5
-    #Assertions : 5
+    ....E.
+    #Tests      : 6
+    #Assertions : 6
     #Errors     : 1
     **** ERROR ****
     [fkooman\Put\Exception\AssertSameException]
@@ -125,9 +125,9 @@ You can view the `report.html` in your web browser.
     '2019-01-01'
     --- END ---
     #0 /home/fkooman/Projects/put/tests/SimpleTest.php(16): PHPUnit\Framework\TestCase->assertSame('2019-01-02', '2019-01-01')
-    #1 /home/fkooman/Projects/put/src/TestCase.php(274): fkooman\Put\SimpleTest->testDate()
-    #2 /home/fkooman/Projects/put/src/Put.php(61): PHPUnit\Framework\TestCase->run()
-    #3 /home/fkooman/Projects/put/bin/put(22): fkooman\Put\Put->run(Array)
+    #1 /usr/share/php/fkooman/Put/TestCase.php(288): fkooman\Put\SimpleTest->testDate()
+    #2 /usr/share/php/fkooman/Put/Put.php(85): PHPUnit\Framework\TestCase->run()
+    #3 /usr/bin/put(22): fkooman\Put\Put->run(Array, '/home/fkooman/P...')
     #4 {main}
 
     $ echo $?
