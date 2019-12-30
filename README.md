@@ -1,27 +1,50 @@
 # PHP Unit Testing for Minimalists
 
-So, after attending a presentation on PHP and mocking I started evaluating
-whether or not I actually need PHPUnit. It seems the only assertion I use all
-the time is `assertSame()`. That seems hardly enough justification for having 
-PHPUnit as a (development) dependency. Are we simple yet? :-)
+A simple PHPUnit replacement with support for PHP >= 5.4. It implements the
+most common PHPUnit assertions. In addition, it supports PHP Code Coverage
+using [pcov](https://github.com/krakjoe/pcov) on PHP >= 7.
 
-That is when I decided to see how difficult it would be to create my own 
-PHPUnit compatible unit tester. Turns out, not *that* difficult for the very 
-basic functionality.
+We support a few common assertions, and the recommended way to test exceptions, 
+nothing more. No mocks, no data providers and no PHPUnit annotations. Those 
+should not be used anyway as that reduces the effectiveness of static code 
+analysis.
 
-The goal is obviously *NOT* to have full feature compatibility with PHPUnit. 
-Only stuff that is useful, and easy to implement, and that has no other obvious
-way to achieve is implemented. 
+## Assertions
 
-So, no object mocking, no data providers, no PHPUnit annotations and just a 
-bunch of assertions and exception testing. That's all.
+The following assertions are implemented:
 
-After testing some software in the wild, it turns out many projects can be 
-tested with put!
+* `assertSame()`
+* `assertNotSame()`
+* `assertGreaterThanOrEqual()`
+* `assertInternalType()`
+* `assertEquals()`
+* `assertNotEmpty()`
+* `assertTrue()`
+* `assertFalse()`
+* `assertNull()`
+* `assertNotNull()`
+* `assertInstanceOf()`
+* `fail()`
+
+## Exceptions
+
+For testing exceptions we implemented:
+
+* `expectException()`
+* `expectExceptionMessage()`
+
+For example:
+
+    $this->expectException('RangeException');
+
+Or when using PHP >= 5.5:
+
+    $this->expectException(RangeException::class);
 
 ## Using
 
-This project requires PHP >= 5.4. It has no other dependencies.
+This project requires PHP >= 5.4. It has no other dependencies, but optionally
+`ext-pcov` for code coverage reporting.
 
 In your project's `composer.json`:
 
@@ -61,41 +84,8 @@ directory of your project. A simple example:
         }
     }
 
-This makes it easy to run both PHPUnit and put to make sure put is not screwing 
-up :)
-
-### Assertions
-
-As of now, we have the following assertions implemented:
-
-* `assertSame()`
-* `assertNotSame()`
-* `assertGreaterThanOrEqual()`
-* `assertInternalType()`
-* `assertEquals()`
-* `assertNotEmpty()`
-* `assertTrue()`
-* `assertFalse()`
-* `assertNull()`
-* `assertNotNull()`
-* `assertInstanceOf()`
-* `fail()`
-
-For testing exceptions we implemented:
-
-* `expectException()`
-* `expectExceptionMessage()`
-
-### Exceptions
-
-There are two ways to test exceptions. The first is by using 
-`expectException()` at the start of the your test method, e.g.:
-
-    $this->expectException('RangeException');
-
-Or when using PHP >= 5.5:
-
-    $this->expectException(RangeException::class);
+This makes it easy to support both `phpunit` and `put` with the same test 
+suite.
 
 ## Running Tests
 
@@ -108,16 +98,17 @@ Assuming you added `put` to your `composer.json`, you can simply run it:
     $ echo $?
     0
 
-There are 3 parameters to `put`. You can specify the project's autoloader with 
-the `--bootstrap` flag, and the test file suffix with the `--suffix` flag. You 
-can also specify the directory that contains the tests. As an example (using 
-the defaults):
+See `vendor/bin/put --help` for a description of the configuration options. 
+
+As an example, with the defaults:
 
     $ vendor/bin/put --bootstrap vendor/autoload.php --suffix Test.php tests
 
-This uses the default composer `vendor/autoload.php` as the autoloader and 
-searches (recursively) in the `tests/` directory for PHP files where their 
-name ends in `Test.php`.
+To run code coverage reporting, using the defaults:
+
+    $ vendor/bin/put --coverage report.html
+
+You can view the `report.html` in your web browser.
 
 ### Test Failure
 
