@@ -25,6 +25,9 @@ class TestCase
     private $riskyCount = 0;
 
     /** @var int */
+    private $skippedCount = 0;
+
+    /** @var int */
     private $assertionCount = 0;
 
     /** @var int */
@@ -226,6 +229,14 @@ class TestCase
     }
 
     /**
+     * @return void
+     */
+    protected function markTestSkipped()
+    {
+        ++$this->skippedCount;
+    }
+
+    /**
      * @return int
      */
     public function noOfAssertions()
@@ -247,6 +258,14 @@ class TestCase
     public function noOfRiskyTests()
     {
         return $this->riskyCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function noOfSkippedTests()
+    {
+        return $this->skippedCount;
     }
 
     /**
@@ -281,6 +300,7 @@ class TestCase
 
                 if (0 === strpos($classMethod, 'test')) {
                     $preAssertionCount = $this->assertionCount;
+                    $preSkippedCount = $this->skippedCount;
                     ++$this->testCount;
                     $expectedException = null;
                     $expectedExceptionMessage = null;
@@ -314,7 +334,11 @@ class TestCase
                     $this->expectedException = null;
                     $this->expectedExceptionMessage = null;
                     $postAssertionCount = $this->assertionCount;
-                    if ($preAssertionCount === $postAssertionCount) {
+                    $postSkippedCount = $this->skippedCount;
+                    // XXX do not count skipped tests as risky!
+                    if ($preSkippedCount !== $postSkippedCount) {
+                        echo 'S';
+                    } elseif ($preAssertionCount === $postAssertionCount) {
                         echo 'R';
                         ++$this->riskyCount;
                     } else {

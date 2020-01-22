@@ -66,6 +66,7 @@ class Put
         $assertionCount = 0;
         $testCount = 0;
         $riskyCount = 0;
+        $skippedCount = 0;
         $errorCount = 0;
         $errorList = [];
         $alreadyTested = [];
@@ -86,6 +87,7 @@ class Put
             $assertionCount += $c->noOfAssertions();
             $testCount += $c->noOfTests();
             $riskyCount += $c->noOfRiskyTests();
+            $skippedCount += $c->noOfSkippedTests();
             $errorCount += $c->noOfErrors();
             $errorList = array_merge($errorList, $c->errorList());
         }
@@ -98,10 +100,13 @@ class Put
         }
 
         echo PHP_EOL;
-        echo '#Tests      : '.$testCount.PHP_EOL;
-        echo '#Assertions : '.$assertionCount.PHP_EOL;
+        echo '#Tests        : '.$testCount.PHP_EOL;
+        echo '#Assertions   : '.$assertionCount.PHP_EOL;
         if (0 !== $riskyCount) {
-            echo '#Risky Tests: '.$riskyCount.PHP_EOL;
+            echo '#Risky Tests  : '.$riskyCount.PHP_EOL;
+        }
+        if (0 !== $skippedCount) {
+            echo '#Skipped Tests: '.$skippedCount.PHP_EOL;
         }
         if (0 !== $errorCount) {
             echo '#Errors     : '.$errorCount.PHP_EOL;
